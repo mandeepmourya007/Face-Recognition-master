@@ -1,11 +1,53 @@
+#!/usr/bin/python
 import cv2,os
 import numpy as np
 import sqlite3
-from PIL import Image 
-import pickle
-conn = sqlite3.connect('attendance.db')
-recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read('trainer/trainer.yml')
+#from PIL import Image 
+#mport pickle
+import time
+import datetime
+
+conn = sqlite3.connect('attend.db')
+x = datetime.datetime.now()
+day=str(x.strftime("%x"))
+day=day.split('/')
+day="d" +day[1]+"_"+day[0]+"_"+day[2]
+
+
+
+
+
+
+
+
+##os.system("espeak  " + str(day) )
+##
+##
+##os.system("espeak 'please attend your roll call'")
+##
+##time.sleep(1)
+##os.system("espeak '5'")
+##time.sleep(0)
+##os.system("espeak '4'")
+##time.sleep(0)
+##os.system("espeak '3'")
+##time.sleep(0)
+##os.system("espeak '2'")
+##time.sleep(1)
+##os.system("espeak '1'")
+##time.sleep(1)
+##os.system("espeak 'start'")
+
+
+
+#new
+recognizer = cv2.createLBPHFaceRecognizer()
+# 1u not work recognizer = cv2.face.createLBPHFaceRecognizer()
+#oldinwindow
+ #  recognizer = cv2.face.LBPHFaceRecognizer_create()
+
+recognizer.load('trainer/trainer.yml')
+#old recognizer.read('trainer/trainer.yml')
 cascadePath = "Classifiers/face.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath);
 path = 'dataSet'
@@ -28,8 +70,12 @@ while True:
              nbr_predicted='Anirban'
         elif(nbr_predicted==8):
              nbr_predicted='Mandeep'
+            # os.system("espeak  " + nbr_predicted )
         elif(nbr_predicted==1543136):
-             nbr_predicted='Simran Kanda'
+             nbr_predicted='Simran_Kanda'
+             conn.execute("update %s  set Attendance=1 where Roll=1543136" %(day))
+             conn.commit()
+            
          #    cursor = conn.execute("SELECT Roll from data")
           #   for i in cursor:
            #      print i
@@ -59,12 +105,20 @@ while True:
              nbr_predicted='Nikita Digra'
         elif(nbr_predicted==1543157):
              nbr_predicted='Tanu'
+             conn.execute("update %s  set Attendance=1 where Roll=1543157" %(day))
+             conn.commit()
         elif(nbr_predicted==1542520):
              nbr_predicted='Rabia Mahajan'
+             conn.execute("update %s  set Attendance=1 where Roll=1542520" %(day))
+             conn.commit()
         elif(nbr_predicted==1543131):
              nbr_predicted='Shivani Sharma'
+             conn.execute("update %s  set Attendance=1 where Roll=1543131" %(day))
+             conn.commit()
         elif(nbr_predicted==1544778):
              nbr_predicted='Ramandeep Kaur'
+             conn.execute("update %s  set Attendance=1 where Roll=1544778" %(day))
+             conn.commit()
         elif(nbr_predicted==1543821):
              nbr_predicted='Deepak Singh'
         elif(nbr_predicted==1544054):
@@ -73,10 +127,12 @@ while True:
              nbr_predicted='Pankaj Bawa'
         elif(nbr_predicted==1543072):
              nbr_predicted='Rasbihari Sharma'
+        else:
+            nbr_predicted='Unknown person'
              
             
                          
-        #cv2.cv.PutText(cv2.cv.fromarray(im),str(nbr_predicted)+"--"+str(conf), (x,y+h),cv2.cv.FONT_HERSHEY_PLAIN, 255) #Draw the text
+      #  cv2.cv.PutText(cv2.cv.fromarray(im),str(nbr_predicted)+"--"+str(conf), (x,y+h),cv2.cv.FONT_HERSHEY_PLAIN, 255) #Draw the text
         cv2.putText(im,str(nbr_predicted), (x,y-55), font, 1, (225,255,225), 2)
         cv2.imshow('im',im)
         print(nbr_predicted)
