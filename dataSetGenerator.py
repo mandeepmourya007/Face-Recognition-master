@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import cv2
 cam = cv2.VideoCapture(0)
 detector=cv2.CascadeClassifier('Classifiers/face.xml')
