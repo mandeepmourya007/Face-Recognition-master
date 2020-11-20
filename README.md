@@ -19,6 +19,3 @@ Face Recognition tutorial refference for http://thecodacus.com
 * run trainer.py
 * run detector.py
 
-## Authors
-
-* **[Anirban Kar](http://thecodacus.com/author/admin/)**
